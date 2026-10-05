@@ -1,5 +1,5 @@
 import { getTranslations } from 'next-intl/server';
-import { ButtonLink } from '@/components/ui/Button';
+import { WhatsAppButton } from '@/components/contact/WhatsAppButton';
 import type { Locale } from '@/lib/data/types';
 import { HeroVideo } from './HeroVideo';
 import styles from './Hero.module.css';
@@ -9,8 +9,10 @@ export const HERO_MEDIA = {
   poster: '/media/hero-poster.jpg',
 } as const;
 
+/** The two approved booking buttons open WhatsApp with a matching prefilled message. */
 export async function Hero({ locale }: { locale: Locale }) {
   const t = await getTranslations({ locale, namespace: 'hero' });
+  const wa = await getTranslations({ locale, namespace: 'wa' });
   return (
     <section className={styles.hero} aria-labelledby="hero-title">
       <HeroVideo src={HERO_MEDIA.video} poster={HERO_MEDIA.poster} />
@@ -21,16 +23,12 @@ export async function Hero({ locale }: { locale: Locale }) {
           {t('title')}
         </h1>
         <div className={styles.actions}>
-          <ButtonLink href={{ pathname: '/book', query: { place: 'salon' } }} size="lg">
+          <WhatsAppButton locale={locale} message={wa('salon')} size="lg">
             {t('bookSalon')}
-          </ButtonLink>
-          <ButtonLink
-            href={{ pathname: '/book', query: { place: 'home' } }}
-            size="lg"
-            variant="onDark"
-          >
+          </WhatsAppButton>
+          <WhatsAppButton locale={locale} message={wa('home')} size="lg" variant="onDark">
             {t('bookHome')}
-          </ButtonLink>
+          </WhatsAppButton>
         </div>
       </div>
     </section>

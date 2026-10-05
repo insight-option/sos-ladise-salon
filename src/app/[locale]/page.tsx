@@ -5,11 +5,11 @@ import { notFound } from 'next/navigation';
 import { Hero } from '@/components/home/Hero';
 import {
   CategoriesSection,
-  HomeServiceSection,
   ContactSection,
+  HomeServiceSection,
 } from '@/components/home/HomeSections';
 import { routing } from '@/i18n/routing';
-import { getRepository } from '@/lib/data/repository';
+import { CATEGORIES } from '@/lib/data/categories';
 import { pageMetadata } from '@/lib/seo';
 
 export async function generateMetadata({ params }: PageProps<'/[locale]'>): Promise<Metadata> {
@@ -28,24 +28,17 @@ export async function generateMetadata({ params }: PageProps<'/[locale]'>): Prom
   };
 }
 
-/**
- * Sections with no approved content (gallery, about/team, testimonials) are not rendered at all
- * until real data exists — spec §4.1.5–7.
- */
 export default async function HomePage({ params }: PageProps<'/[locale]'>) {
   const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) notFound();
   setRequestLocale(locale);
 
-  const repo = getRepository();
-  const [categories, settings] = await Promise.all([repo.getCategories(), repo.getSettings()]);
-
   return (
     <>
       <Hero locale={locale} />
-      <CategoriesSection locale={locale} categories={categories} />
+      <CategoriesSection locale={locale} categories={CATEGORIES} />
       <HomeServiceSection locale={locale} />
-      <ContactSection locale={locale} settings={settings} />
+      <ContactSection locale={locale} />
     </>
   );
 }

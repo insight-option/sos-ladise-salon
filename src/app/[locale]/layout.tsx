@@ -3,12 +3,10 @@ import { IBM_Plex_Sans, IBM_Plex_Sans_Arabic } from 'next/font/google';
 import { notFound } from 'next/navigation';
 import { hasLocale, NextIntlClientProvider } from 'next-intl';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
-import { DemoBanner } from '@/components/layout/DemoBanner';
 import { SiteFooter } from '@/components/layout/SiteFooter';
 import { SiteHeader } from '@/components/layout/SiteHeader';
 import { DIRECTION, routing } from '@/i18n/routing';
-import { getRepository } from '@/lib/data/repository';
-import { siteUrl } from '@/lib/seo';
+import { isIndexable, siteUrl } from '@/lib/seo';
 import '@/styles/globals.css';
 
 const plexArabic = IBM_Plex_Sans_Arabic({
@@ -44,7 +42,7 @@ export async function generateMetadata({ params }: LayoutProps<'/[locale]'>): Pr
     title: { default: t('homeTitle'), template: `%s | ${t('siteName')}` },
     description: t('homeDescription'),
     // Preview builds stay out of search engines until launch.
-    robots: process.env.APP_ENV === 'production' ? undefined : { index: false, follow: false },
+    ...(isIndexable() ? {} : { robots: { index: false, follow: false } }),
   };
 }
 
@@ -54,7 +52,6 @@ export default async function LocaleLayout({ children, params }: LayoutProps<'/[
   setRequestLocale(locale);
 
   const t = await getTranslations({ locale, namespace: 'common' });
-  const repo = getRepository();
 
   return (
     <html
@@ -67,7 +64,6 @@ export default async function LocaleLayout({ children, params }: LayoutProps<'/[
           {t('skipToContent')}
         </a>
         <NextIntlClientProvider>
-          {repo.isDemo && <DemoBanner locale={locale} />}
           <div style={{ minHeight: '100svh', display: 'flex', flexDirection: 'column' }}>
             <SiteHeader />
             <main id="main" style={{ flex: '1 0 auto' }}>

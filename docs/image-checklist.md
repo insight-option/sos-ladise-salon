@@ -14,11 +14,9 @@
 | `images/soso/service-hair.webp` | خدمات الشعر | 1536×1024 | تصفيف شعر طويل بالمجفف والفرشاة الدائرية | Long hair being blow-dried with a round brush | **توضيحية** |
 | `images/soso/service-nails.webp` | خدمات الأظافر | 1536×1024 | طلاء أظافر بلون وردي هادئ | Nails being painted in a soft pink polish | **توضيحية** |
 | `images/soso/service-henna.webp` | الحناء | 1536×1024 | نقش حناء زهري على ظاهر اليد | A floral henna design on the back of a hand | **توضيحية** |
-| `images/soso/hero-home-service.webp` | قسم الخدمة المنزلية في الرئيسية | 1536×1024 | خبيرة تجميل تقدّم خدمة لعميلة في غرفة جلوس منزلية | A beautician attending to a client in a home living room | **توضيحية** |
-| `images/soso/home-service-manicure.webp` | صفحة الخدمة المنزلية (المرحلة 3) | 1536×1024 | خبيرة تعتني بأظافر عميلة في المنزل | A specialist giving a client a manicure at home | **توضيحية** (لم تُستخدم بعد) |
-| `images/soso/home-service-beauty-kit.webp` | صفحة الخدمة المنزلية (المرحلة 3) | 1536×1024 | حقيبة أدوات تجميل عنابية مفتوحة فيها فُرش ومستحضرات | An open burgundy beauty kit with brushes and products | **توضيحية** (لم تُستخدم بعد) |
+| `images/soso/hero-home-service.webp` | الخدمة المنزلية (الرئيسية وصفحتها) | 1536×1024 | خبيرة تجميل تقدّم خدمة لعميلة في غرفة جلوس منزلية | A beautician attending to a client in a home living room | **توضيحية** |
+| `images/soso/home-service-manicure.webp` | صفحة الخدمة المنزلية | 1536×1024 | خبيرة تعتني بأظافر عميلة في المنزل | A specialist giving a client a manicure at home | **توضيحية** |
+| `images/soso/home-service-beauty-kit.webp` | صفحة الخدمة المنزلية | 1536×1024 | حقيبة أدوات تجميل عنابية مفتوحة فيها فُرش ومستحضرات | An open burgundy beauty kit with brushes and products | **توضيحية** |
 | `images/soso/salon-interior-illustration.webp` | رأس صفحة الخدمات (أجواء) | 1536×1024 | صالون بمقاعد عنابية ومرايا مقوّسة بإطارات ذهبية | A salon with burgundy chairs and arched gold-framed mirrors | **توضيحية**. ممنوع استخدامها كصورة للمقر الحقيقي |
-| gallery-* | المعرض، مع `consentConfirmed` لصور العميلات | 1200×1500 | لكل صورة | per image | **ناقصة** (القسم مخفي) |
 | salon-real-interior / exterior | عن الصالون، التواصل | 1600×1000 | — | — | **ناقصة** (صور حقيقية) |
-| team-* | الفريق، بموافقة كل موظفة | 800×1000 | — | — | **ناقصة** (القسم مخفي) |
 | og-image | المشاركة الاجتماعية | 1200×630 | سوسو – صالون نسائي | Soso Ladies Salon | **ناقصة** (يمكن تصميمها من الشعار والصور التوضيحية) |

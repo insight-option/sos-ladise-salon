@@ -1,28 +1,24 @@
 import { getTranslations } from 'next-intl/server';
 import { buttonClass } from '@/components/ui/Button';
 import { Icon } from '@/components/ui/Icon';
-import type { Locale, SalonSettings } from '@/lib/data/types';
+import { SITE } from '@/lib/data/site';
+import type { Locale } from '@/lib/data/types';
 import { buildTelLink, buildWhatsAppLink, formatPhoneDisplay } from '@/lib/whatsapp';
 import styles from './ContactButtons.module.css';
 
-/**
- * "Call us" and "WhatsApp" buttons, each bound to its own approved number.
- * A button is omitted when its number is not configured.
- */
+/** "Call us" and "WhatsApp" buttons, each bound to its own approved number. */
 export async function ContactButtons({
-  settings,
   locale,
   showNumbers = false,
 }: {
-  settings: SalonSettings;
   locale: Locale;
   showNumbers?: boolean;
 }) {
   const t = await getTranslations({ locale, namespace: 'contact' });
-  const tel = buildTelLink(settings.phone);
-  const whatsapp = buildWhatsAppLink(settings.whatsapp);
-  const phoneText = formatPhoneDisplay(settings.phone);
-  const whatsappText = formatPhoneDisplay(settings.whatsapp);
+  const wa = await getTranslations({ locale, namespace: 'wa' });
+  const common = await getTranslations({ locale, namespace: 'common' });
+  const tel = buildTelLink(SITE.phone);
+  const whatsapp = buildWhatsAppLink(SITE.whatsapp, wa('general'));
 
   return (
     <>
@@ -31,9 +27,9 @@ export async function ContactButtons({
           <Icon name="phone" size={20} />
           <span className={styles.label}>
             {t('call')}
-            {showNumbers && phoneText && (
+            {showNumbers && (
               <bdi dir="ltr" className={styles.number}>
-                {phoneText}
+                {formatPhoneDisplay(SITE.phone)}
               </bdi>
             )}
           </span>
@@ -49,12 +45,13 @@ export async function ContactButtons({
           <Icon name="whatsapp" size={20} />
           <span className={styles.label}>
             {t('whatsapp')}
-            {showNumbers && whatsappText && (
+            {showNumbers && (
               <bdi dir="ltr" className={styles.number}>
-                {whatsappText}
+                {formatPhoneDisplay(SITE.whatsapp)}
               </bdi>
             )}
           </span>
+          <span className="visually-hidden">{common('opensWhatsapp')}</span>
         </a>
       )}
     </>

@@ -1,40 +1,21 @@
+import { existsSync } from 'node:fs';
+import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import ar from '@/messages/ar.json';
 import en from '@/messages/en.json';
 import { CATEGORIES } from './data/categories';
-import { demoBusinessHours, demoServices, demoZones } from './data/demo-data';
-import { createEmptyRepository, filterServices } from './data/repository';
-import { computeTotal, getPriceDisplay } from './pricing';
-import { isValidQatarPhone } from './phone';
-import { formatNumber } from './format';
-import { formatQar } from './pricing';
+import { LOGO, SITE_IMAGES } from './data/media';
+import { SITE } from './data/site';
 import { buildTelLink, buildWhatsAppLink, formatPhoneDisplay } from './whatsapp';
 import { checkEnv } from '../../scripts/check-env.mjs';
-
-describe('phone validation', () => {
-  it('accepts common ways of typing a Qatari mobile number', () => {
-    for (const ok of [
-      '55551234',
-      '5555 1234',
-      '+974 5555 1234',
-      '+97455551234',
-      '00974-5555-1234',
-    ]) {
-      expect(isValidQatarPhone(ok), ok).toBe(true);
-    }
-  });
-  it('rejects incomplete or non-numeric input', () => {
-    for (const bad of ['', '5555123', '+974 5555 12345', 'abcdefgh', '+1 555 555 1234']) {
-      expect(isValidQatarPhone(bad), bad).toBe(false);
-    }
-  });
-});
 
 function keys(obj: object, prefix = ''): string[] {
   return Object.entries(obj).flatMap(([k, v]) =>
     v && typeof v === 'object' ? keys(v, `${prefix}${k}.`) : [`${prefix}${k}`],
   );
 }
+
+const publicFile = (src: string) => join(process.cwd(), 'public', src);
 
 describe('translations', () => {
   it('Arabic and English define exactly the same keys', () => {
@@ -45,18 +26,23 @@ describe('translations', () => {
     expect(ar.hero.title).toBe('جمالك وراحتك… في الصالون أو في بيتك');
     expect(ar.hero.bookSalon).toBe('احجزي في الصالون');
     expect(ar.hero.bookHome).toBe('اطلبي خدمة منزلية');
-    expect(ar.book.receivedTitle).toBe('تم استلام طلب حجزك، وسنؤكد الموعد بعد مراجعة التوفر');
-    expect(ar.common.priceAfterReview).toBe('السعر يُحدَّد بعد المراجعة');
+    expect(ar.contact.call).toBe('اتصلي بنا');
+    expect(ar.contact.whatsapp).toBe('تواصلي عبر واتساب');
   });
 
-  it('never claims a booking is confirmed', () => {
-    expect(JSON.stringify(ar)).not.toContain('تم تأكيد الحجز');
-    expect(JSON.stringify(en).toLowerCase()).not.toContain('booking confirmed');
+  it('makes no claims the showcase site cannot back up', () => {
+    const all = JSON.stringify(ar) + JSON.stringify(en).toLowerCase();
+    expect(all).not.toContain('تم تأكيد الحجز');
+    expect(all).not.toMatch(/ر\.ق|qar|\d+ ?(دقيقة|min)/);
+  });
+
+  it('uses Latin digits only', () => {
+    expect(JSON.stringify(ar)).not.toMatch(/[٠-٩]/);
   });
 });
 
-describe('data rules', () => {
-  it('has the five confirmed categories in order', () => {
+describe('content', () => {
+  it('has the five confirmed categories in order, each with an existing image', () => {
     expect(CATEGORIES.map((c) => c.slug)).toEqual([
       'facial',
       'permanent-makeup',
@@ -64,108 +50,62 @@ describe('data rules', () => {
       'nails',
       'henna',
     ]);
+    for (const c of CATEGORIES) expect(existsSync(publicFile(c.image.src)), c.image.src).toBe(true);
   });
 
-  it('marks every demo record as demo', () => {
-    expect([...demoServices, ...demoZones, ...demoBusinessHours].every((r) => r.isDemo)).toBe(true);
-  });
-
-  it('hides unpublished services and filters by place', () => {
-    const all = filterServices(demoServices);
-    expect(all.every((s) => s.published)).toBe(true);
-    expect(filterServices(demoServices, { place: 'home' }).every((s) => s.availableAtHome)).toBe(
-      true,
-    );
-    expect(filterServices(demoServices, { category: 'henna' })).toEqual([]);
-  });
-
-  it('serves nothing operational before data is approved', async () => {
-    const repo = createEmptyRepository();
-    expect(repo.isDemo).toBe(false);
-    expect(await repo.getServices()).toEqual([]);
-    expect(await repo.getActiveZones()).toEqual([]);
-    const settings = await repo.getSettings();
-    // Only the approved contact numbers are set; everything else waits for approval.
-    expect(settings.phone).toBe('33428070');
-    expect(settings.whatsapp).toBe('74748944');
-    expect(settings.address).toBeUndefined();
-    expect(settings.homeTravelMinutes).toBeUndefined();
-    expect(settings.pendingRequestsBlockSlots).toBe(false);
-  });
-});
-
-describe('pricing', () => {
-  it('shows a number only for an approved fixed price', () => {
-    expect(getPriceDisplay({ priceMode: 'fixed', price: 120 })).toEqual({
-      kind: 'fixed',
-      amount: 120,
-    });
-    expect(getPriceDisplay({ priceMode: 'fixed' })).toEqual({ kind: 'after_review' });
-    expect(getPriceDisplay({ priceMode: 'after_review', price: 120 })).toEqual({
-      kind: 'after_review',
-    });
-  });
-
-  it('never invents a total', () => {
-    const fixed = { kind: 'fixed', amount: 100 } as const;
-    expect(computeTotal(fixed, undefined, false)).toBe(100);
-    expect(computeTotal(fixed, 50, true)).toBe(150);
-    expect(computeTotal(fixed, undefined, true)).toBeUndefined();
-    expect(computeTotal({ kind: 'after_review' }, 50, true)).toBeUndefined();
-  });
-});
-
-describe('whatsapp link', () => {
-  it('is hidden until a valid number exists', () => {
-    expect(buildWhatsAppLink(undefined)).toBeNull();
-    expect(buildWhatsAppLink('abc')).toBeNull();
-  });
-  it('adds the Qatar code to local 8-digit numbers', () => {
-    expect(buildWhatsAppLink('5555 1234')).toBe('https://wa.me/97455551234');
-    expect(buildWhatsAppLink('+974 5555 1234')).toBe('https://wa.me/97455551234');
-  });
-});
-
-describe('environment check', () => {
-  it('requires APP_ENV', () => {
-    expect(checkEnv({})).toHaveLength(1);
-    expect(checkEnv({ APP_ENV: 'preview' })).toEqual([]);
-  });
-  it('blocks production builds that would ship demo data', () => {
-    const errors = checkEnv({
-      APP_ENV: 'production',
-      DATA_SOURCE: 'demo',
-      NEXT_PUBLIC_SITE_URL: 'https://x.qa',
-    });
-    expect(errors.join()).toMatch(/DATA_SOURCE=amplify/);
-    expect(checkEnv({ APP_ENV: 'production', DATA_SOURCE: 'amplify' }).join()).toMatch(
-      /NEXT_PUBLIC_SITE_URL/,
-    );
-    expect(
-      checkEnv({
-        APP_ENV: 'production',
-        DATA_SOURCE: 'amplify',
-        NEXT_PUBLIC_SITE_URL: 'https://soso.qa',
-      }),
-    ).toEqual([]);
+  it('marks every supplied photo as illustrative and gives it alt text in both languages', () => {
+    for (const img of [...Object.values(SITE_IMAGES), ...CATEGORIES.map((c) => c.image)]) {
+      expect(img.kind).toBe('illustrative');
+      expect(img.alt.ar.length).toBeGreaterThan(5);
+      expect(img.alt.en.length).toBeGreaterThan(5);
+      expect(existsSync(publicFile(img.src)), img.src).toBe(true);
+    }
+    expect(existsSync(publicFile(LOGO.src))).toBe(true);
+    expect(existsSync(publicFile('media/hero.mp4'))).toBe(true);
+    expect(existsSync(publicFile('media/hero-poster.jpg'))).toBe(true);
   });
 });
 
 describe('approved contact numbers', () => {
-  it('builds the exact approved links and display text', () => {
-    expect(buildTelLink('33428070')).toBe('tel:+97433428070');
-    expect(formatPhoneDisplay('33428070')).toBe('+974 3342 8070');
-    expect(buildWhatsAppLink('74748944')).toBe('https://wa.me/97474748944');
-    expect(formatPhoneDisplay('74748944')).toBe('+974 7474 8944');
-    expect(buildTelLink(undefined)).toBeNull();
+  it('are exactly the owner-approved numbers', () => {
+    expect(SITE.phone).toBe('33428070');
+    expect(SITE.whatsapp).toBe('74748944');
+  });
+
+  it('build the exact approved links and display text', () => {
+    expect(buildTelLink(SITE.phone)).toBe('tel:+97433428070');
+    expect(formatPhoneDisplay(SITE.phone)).toBe('+974 3342 8070');
+    expect(buildWhatsAppLink(SITE.whatsapp)).toBe('https://wa.me/97474748944');
+    expect(formatPhoneDisplay(SITE.whatsapp)).toBe('+974 7474 8944');
+  });
+
+  it('prefills WhatsApp messages', () => {
+    const link = new URL(buildWhatsAppLink(SITE.whatsapp, ar.wa.salon)!);
+    expect(link.origin + link.pathname).toBe('https://wa.me/97474748944');
+    expect(link.searchParams.get('text')).toBe(ar.wa.salon);
+  });
+
+  it('rejects invalid numbers', () => {
+    expect(buildWhatsAppLink(undefined)).toBeNull();
+    expect(buildWhatsAppLink('abc')).toBeNull();
+    expect(buildTelLink('123')).toBeNull();
   });
 });
 
-describe('digits', () => {
-  it('uses Latin digits in both languages', () => {
-    expect(formatNumber(60, 'ar')).toBe('60');
-    expect(formatNumber(120, 'en')).toBe('120');
-    expect(formatQar(100, 'ar')).toMatch(/100/);
-    expect(formatQar(100, 'ar')).not.toMatch(/[٠-٩]/);
+describe('environment check', () => {
+  it('defaults to preview and needs nothing else', () => {
+    expect(checkEnv({})).toEqual([]);
+    expect(checkEnv({ APP_ENV: 'staging' })).toHaveLength(1);
+  });
+
+  it('production needs an https origin, explicit or derived on Amplify', () => {
+    expect(checkEnv({ APP_ENV: 'production' }).join()).toMatch(/NEXT_PUBLIC_SITE_URL/);
+    expect(checkEnv({ APP_ENV: 'production', AWS_APP_ID: 'd1', AWS_BRANCH: 'main' })).toEqual([]);
+    expect(checkEnv({ APP_ENV: 'production', NEXT_PUBLIC_SITE_URL: 'http://x.qa' })).toHaveLength(
+      1,
+    );
+    expect(checkEnv({ APP_ENV: 'production', NEXT_PUBLIC_SITE_URL: 'https://soso.qa' })).toEqual(
+      [],
+    );
   });
 });

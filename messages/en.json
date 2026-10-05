@@ -1,52 +1,32 @@
 {
   "meta": {
     "siteName": "Soso Ladies Salon",
-    "brandName": "Soso",
-    "brandTagline": "Ladies Salon",
     "homeTitle": "Soso Ladies Salon | At the salon or at home",
-    "homeDescription": "A ladies salon in Qatar: facial, permanent makeup, hair, nails and henna — at the salon or in your home.",
+    "homeDescription": "A ladies salon in Qatar: facial, permanent makeup, hair, nails and henna — at the salon or in your home. Call us or message us on WhatsApp.",
     "servicesTitle": "Services",
-    "servicesDescription": "Soso services grouped by section, with a filter for where the service is provided.",
-    "bookTitle": "Booking request",
-    "bookDescription": "Send a booking request for the salon or a home service; we confirm the time after checking availability.",
-    "comingSoonTitle": "Coming soon",
+    "servicesDescription": "Soso service sections: facial, permanent makeup, hair, nails and henna.",
+    "homeServiceTitle": "Home service",
+    "homeServiceDescription": "Soso services in your home. Message us on WhatsApp to see what is available.",
     "contactTitle": "Contact",
     "contactDescription": "Call Soso Ladies Salon or message us on WhatsApp."
   },
   "common": {
     "skipToContent": "Skip to content",
-    "priceAfterReview": "Price determined after review",
-    "minutes": "{count} min",
-    "durationUnknown": "Duration to be confirmed",
-    "atSalon": "At the salon",
-    "atHome": "At home",
-    "details": "Details",
-    "book": "Book",
-    "back": "Back",
-    "next": "Next",
-    "edit": "Edit",
     "illustrativeImage": "Illustrative image",
-    "imagePending": "Image pending approval",
-    "illustrativeNote": "Images are illustrations of our services, not photos of the salon’s work, team or premises."
-  },
-  "demo": {
-    "banner": "Preview — the data shown is demo data, not the salon's approved information.",
-    "badge": "Demo data"
+    "illustrativeNote": "Images are illustrations of our services, not photos of the salon’s work, team or premises.",
+    "opensWhatsapp": "(opens WhatsApp)"
   },
   "nav": {
     "label": "Main menu",
-    "home": "Home",
+    "logoLabel": "Soso Ladies Salon, home page",
     "services": "Services",
     "homeService": "Home service",
-    "gallery": "Gallery",
     "contact": "Contact",
-    "account": "My account",
     "book": "Book",
     "openMenu": "Open menu",
     "closeMenu": "Close menu",
     "switchLanguage": "العربية",
-    "switchLanguageLabel": "Switch to Arabic",
-    "logoLabel": "Soso Ladies Salon, home page"
+    "switchLanguageLabel": "Switch to Arabic"
   },
   "hero": {
     "eyebrow": "At the salon • At home",
@@ -61,92 +41,25 @@
     "allServices": "All services",
     "homeServiceEyebrow": "Home service",
     "homeServiceTitle": "Selected services, in your home",
-    "homeServiceBody": "Available home services and coverage areas will be announced soon.",
-    "homeServiceStep1": "Choose a service",
-    "homeServiceStep2": "Set your area and address",
-    "homeServiceStep3": "We confirm after review",
-    "bookCta": "Book an appointment"
+    "homeServiceBody": "Message us on WhatsApp to see which services are available at home and to arrange a time.",
+    "homeServiceMore": "About home service"
+  },
+  "steps": {
+    "one": "Message us on WhatsApp",
+    "two": "Choose the service and your area",
+    "three": "We confirm the time with you"
   },
   "services": {
     "title": "Services",
-    "placeFilterLabel": "Where the service is provided",
-    "placeAll": "All",
+    "intro": "Choose the section that suits you and message us on WhatsApp for details and appointments.",
     "categoriesNav": "Sections",
-    "empty": "No services are published in this section yet.",
-    "emptyHint": "Feel free to contact us with any questions.",
-    "duration": "Duration",
-    "price": "Price",
-    "requestConsultation": "Request a consultation"
+    "ask": "Ask on WhatsApp"
   },
-  "service": {
-    "where": "Where",
-    "preparation": "Before your appointment",
-    "aftercare": "Aftercare",
-    "bookThis": "Book this service",
-    "backToServices": "All services"
-  },
-  "book": {
-    "title": "Booking request",
-    "stepOf": "Step {current} of {total}",
-    "steps": {
-      "place": "Place",
-      "service": "Service",
-      "zone": "Area",
-      "datetime": "Time",
-      "details": "Your details",
-      "review": "Review"
-    },
-    "placeQuestion": "Where would you like the service?",
-    "placeSalon": "At the salon",
-    "placeSalonHint": "Visit the salon at the confirmed time.",
-    "placeHome": "Home service",
-    "placeHomeHint": "We come to you within our coverage areas.",
-    "homeUnavailable": "Home service: coverage areas will be announced soon.",
-    "serviceQuestion": "Choose a service",
-    "noServices": "No services are available for this option yet.",
-    "zoneQuestion": "Choose your area",
-    "visitFee": "Visit fee",
-    "visitFeePending": "Visit fee determined after review",
-    "zoneNotListed": "Area not listed? Home service is only available in the areas shown.",
-    "dateQuestion": "Choose a day",
-    "timeQuestion": "Choose a time (Qatar time)",
-    "noSlots": "No times are available on this day. Please try another day.",
-    "closedDay": "Closed",
-    "detailsTitle": "Your details",
-    "name": "Name",
-    "phone": "Mobile number",
-    "address": "Full address",
-    "addressHint": "Area, street, building number.",
-    "notes": "Notes (optional)",
-    "loginNotice": "Sending the request requires signing in. Your choices are saved and won't be lost.",
-    "reviewTitle": "Review your request",
-    "reviewNotice": "This is a booking request; the time is confirmed after the salon checks availability.",
-    "service": "Service",
-    "place": "Place",
-    "zone": "Area",
-    "date": "Date",
-    "time": "Time (Qatar)",
-    "duration": "Duration",
-    "price": "Service price",
-    "total": "Total",
-    "submit": "Send request",
-    "submitting": "Sending…",
-    "demoSubmitNotice": "Preview: sending is not enabled yet. No booking is created and nothing reaches the salon.",
-    "receivedTitle": "Your booking request has been received. We'll confirm the time after checking availability.",
-    "statusPending": "Booking request awaiting confirmation",
-    "demoReceivedNotice": "This is a preview of what the customer sees after sending. No real request was sent.",
-    "startOver": "Start a new request",
-    "required": "This field is required.",
-    "phoneInvalid": "Enter a valid mobile number."
-  },
-  "comingSoon": {
-    "title": "Coming soon",
-    "body": "This page is being prepared and will be available soon.",
-    "backHome": "Back to home"
-  },
-  "footer": {
-    "label": "Footer links",
-    "rights": "All rights reserved"
+  "homeService": {
+    "title": "Home service",
+    "intro": "We offer some of our services in your home. Message us on WhatsApp to see which services and areas are available.",
+    "howTitle": "How to request it",
+    "cta": "Request a home service"
   },
   "contact": {
     "title": "Contact us",
@@ -155,5 +68,14 @@
     "whatsapp": "Message us on WhatsApp",
     "phoneLabel": "Phone",
     "whatsappLabel": "WhatsApp"
+  },
+  "wa": {
+    "general": "Hello Soso, I would like to ask about your services.",
+    "salon": "Hello Soso, I would like to book an appointment at the salon.",
+    "home": "Hello Soso, I would like to request a home service.",
+    "category": "Hello Soso, I would like to ask about: {name}."
+  },
+  "footer": {
+    "label": "Footer links"
   }
 }

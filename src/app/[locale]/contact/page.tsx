@@ -5,7 +5,7 @@ import { notFound } from 'next/navigation';
 import { ContactButtons } from '@/components/contact/ContactButtons';
 import { Icon } from '@/components/ui/Icon';
 import { routing } from '@/i18n/routing';
-import { getRepository } from '@/lib/data/repository';
+import { SITE } from '@/lib/data/site';
 import { pageMetadata } from '@/lib/seo';
 import { buildTelLink, buildWhatsAppLink, formatPhoneDisplay } from '@/lib/whatsapp';
 import styles from './contact.module.css';
@@ -32,9 +32,9 @@ export default async function ContactPage({ params }: PageProps<'/[locale]/conta
   setRequestLocale(locale);
 
   const t = await getTranslations({ locale, namespace: 'contact' });
-  const settings = await getRepository().getSettings();
-  const tel = buildTelLink(settings.phone);
-  const whatsapp = buildWhatsAppLink(settings.whatsapp);
+  const wa = await getTranslations({ locale, namespace: 'wa' });
+  const tel = buildTelLink(SITE.phone);
+  const whatsapp = buildWhatsAppLink(SITE.whatsapp, wa('general'));
 
   return (
     <div className={`container ${styles.page}`}>
@@ -44,7 +44,7 @@ export default async function ContactPage({ params }: PageProps<'/[locale]/conta
       </div>
 
       <div className={styles.actions}>
-        <ContactButtons settings={settings} locale={locale} showNumbers />
+        <ContactButtons locale={locale} showNumbers />
       </div>
 
       <dl className={styles.details}>
@@ -56,7 +56,7 @@ export default async function ContactPage({ params }: PageProps<'/[locale]/conta
             </dt>
             <dd>
               <a href={tel}>
-                <bdi dir="ltr">{formatPhoneDisplay(settings.phone)}</bdi>
+                <bdi dir="ltr">{formatPhoneDisplay(SITE.phone)}</bdi>
               </a>
             </dd>
           </div>
@@ -69,7 +69,7 @@ export default async function ContactPage({ params }: PageProps<'/[locale]/conta
             </dt>
             <dd>
               <a href={whatsapp} target="_blank" rel="noopener noreferrer">
-                <bdi dir="ltr">{formatPhoneDisplay(settings.whatsapp)}</bdi>
+                <bdi dir="ltr">{formatPhoneDisplay(SITE.whatsapp)}</bdi>
               </a>
             </dd>
           </div>

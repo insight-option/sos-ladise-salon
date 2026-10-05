@@ -1,36 +1,26 @@
-// Fails the build when required configuration is missing, or when a production build
-// would ship demo data. Runs before `next build` (see package.json).
+// Fails the build on invalid configuration. Runs before `next build` (see package.json).
+// The site has no secrets and no backend; APP_ENV only controls search-engine indexing.
 import { existsSync } from 'node:fs';
 import process from 'node:process';
 import { fileURLToPath } from 'node:url';
 
 const APP_ENVS = ['preview', 'production'];
-const DATA_SOURCES = ['demo', 'empty', 'amplify'];
 
 /** @param {Record<string, string | undefined>} env */
 export function checkEnv(env) {
   const errors = [];
-  const appEnv = env.APP_ENV;
-  const dataSource = env.DATA_SOURCE ?? 'demo';
+  const appEnv = env.APP_ENV ?? 'preview';
 
-  if (!appEnv) errors.push('APP_ENV is required (preview | production).');
-  else if (!APP_ENVS.includes(appEnv))
-    errors.push(`APP_ENV must be one of ${APP_ENVS.join(', ')}.`);
-
-  if (!DATA_SOURCES.includes(dataSource)) {
-    errors.push(`DATA_SOURCE must be one of ${DATA_SOURCES.join(', ')}.`);
-  }
+  if (!APP_ENVS.includes(appEnv)) errors.push(`APP_ENV must be one of ${APP_ENVS.join(', ')}.`);
 
   if (appEnv === 'production') {
-    if (dataSource !== 'amplify') {
-      errors.push(
-        'Production builds must use DATA_SOURCE=amplify (demo/empty data is preview-only).',
-      );
-    }
+    const onAmplify = Boolean(env.AWS_APP_ID && env.AWS_BRANCH);
     const site = env.NEXT_PUBLIC_SITE_URL;
-    if (!site) errors.push('NEXT_PUBLIC_SITE_URL is required in production.');
-    else if (!/^https:\/\/[^/]+/.test(site))
+    if (!site && !onAmplify) {
+      errors.push('Production needs NEXT_PUBLIC_SITE_URL (or an Amplify build to derive it).');
+    } else if (site && !/^https:\/\/[^/]+/.test(site)) {
       errors.push('NEXT_PUBLIC_SITE_URL must be an https:// URL.');
+    }
   }
 
   return errors;
@@ -45,7 +35,5 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
     console.error('Environment check failed:\n' + errors.map((e) => `  - ${e}`).join('\n'));
     process.exit(1);
   }
-  console.log(
-    `Environment check passed (APP_ENV=${process.env.APP_ENV}, DATA_SOURCE=${process.env.DATA_SOURCE ?? 'demo'}).`,
-  );
+  console.log(`Environment check passed (APP_ENV=${process.env.APP_ENV ?? 'preview'}).`);
 }

@@ -1,6 +1,9 @@
 import type { Metadata } from 'next';
 import { LOCALES, type Locale } from './data/types';
 
+/** Search engines may index the site only when APP_ENV=production. */
+export const isIndexable = () => process.env.APP_ENV === 'production';
+
 export function siteUrl(): URL {
   return new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000');
 }
@@ -21,9 +24,8 @@ export function pageMetadata(args: {
   title: string;
   description?: string;
   siteName: string;
-  noindex?: boolean;
 }): Metadata {
-  const { locale, path, title, description, siteName, noindex } = args;
+  const { locale, path, title, description, siteName } = args;
   return {
     title,
     description,
@@ -35,6 +37,7 @@ export function pageMetadata(args: {
       locale: locale === 'ar' ? 'ar_QA' : 'en_QA',
       type: 'website',
     },
-    robots: noindex ? { index: false, follow: true } : undefined,
+    // Set on every page: a page-level key replaces the layout's, so it cannot live only there.
+    ...(isIndexable() ? {} : { robots: { index: false, follow: false } }),
   };
 }

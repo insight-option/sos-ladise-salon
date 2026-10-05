@@ -2,19 +2,18 @@ import Image from 'next/image';
 import { getTranslations } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
 import { LOGO } from '@/lib/data/media';
-import { getRepository } from '@/lib/data/repository';
+import { SITE } from '@/lib/data/site';
 import type { Locale } from '@/lib/data/types';
 import { buildTelLink, buildWhatsAppLink, formatPhoneDisplay } from '@/lib/whatsapp';
 import styles from './SiteFooter.module.css';
 
-/** Privacy/terms links are omitted until their approved text is published (spec §4.7). */
 export async function SiteFooter({ locale }: { locale: Locale }) {
   const t = await getTranslations({ locale, namespace: 'footer' });
   const nav = await getTranslations({ locale, namespace: 'nav' });
   const contact = await getTranslations({ locale, namespace: 'contact' });
-  const settings = await getRepository().getSettings();
-  const tel = buildTelLink(settings.phone);
-  const whatsapp = buildWhatsAppLink(settings.whatsapp);
+  const wa = await getTranslations({ locale, namespace: 'wa' });
+  const tel = buildTelLink(SITE.phone);
+  const whatsapp = buildWhatsAppLink(SITE.whatsapp, wa('general'));
 
   return (
     <footer className={styles.footer}>
@@ -48,7 +47,7 @@ export async function SiteFooter({ locale }: { locale: Locale }) {
             <li>
               <span className={styles.label}>{contact('phoneLabel')}</span>
               <a href={tel}>
-                <bdi dir="ltr">{formatPhoneDisplay(settings.phone)}</bdi>
+                <bdi dir="ltr">{formatPhoneDisplay(SITE.phone)}</bdi>
               </a>
             </li>
           )}
@@ -56,7 +55,7 @@ export async function SiteFooter({ locale }: { locale: Locale }) {
             <li>
               <span className={styles.label}>{contact('whatsappLabel')}</span>
               <a href={whatsapp} target="_blank" rel="noopener noreferrer">
-                <bdi dir="ltr">{formatPhoneDisplay(settings.whatsapp)}</bdi>
+                <bdi dir="ltr">{formatPhoneDisplay(SITE.whatsapp)}</bdi>
               </a>
             </li>
           )}

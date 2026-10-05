@@ -2,8 +2,8 @@ import type { MetadataRoute } from 'next';
 import { routing } from '@/i18n/routing';
 import { siteUrl } from '@/lib/seo';
 
-// Only routes with real content are listed; placeholder pages are noindex and omitted.
-const PATHS = ['', '/services', '/contact'];
+// Every public page of the showcase site, in both languages.
+const PATHS = ['', '/services', '/home-service', '/contact'];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = siteUrl();
