@@ -71,7 +71,3 @@
   min-height: var(--tap);
   font-family: var(--font-en);
 }
-.pending {
-  color: var(--color-muted);
-  font-weight: 400 !important;
-}

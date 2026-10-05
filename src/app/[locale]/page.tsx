@@ -6,7 +6,7 @@ import { Hero } from '@/components/home/Hero';
 import {
   CategoriesSection,
   HomeServiceSection,
-  VisitSection,
+  ContactSection,
 } from '@/components/home/HomeSections';
 import { routing } from '@/i18n/routing';
 import { getRepository } from '@/lib/data/repository';
@@ -45,7 +45,7 @@ export default async function HomePage({ params }: PageProps<'/[locale]'>) {
       <Hero locale={locale} />
       <CategoriesSection locale={locale} categories={categories} />
       <HomeServiceSection locale={locale} />
-      <VisitSection locale={locale} settings={settings} />
+      <ContactSection locale={locale} settings={settings} />
     </>
   );
 }

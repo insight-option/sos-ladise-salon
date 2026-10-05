@@ -104,7 +104,8 @@ export async function HomeServiceSection({ locale }: { locale: Locale }) {
   );
 }
 
-export async function VisitSection({
+/** Booking plus the two approved contact numbers; no address or hours are shown. */
+export async function ContactSection({
   locale,
   settings,
 }: {
@@ -112,19 +113,19 @@ export async function VisitSection({
   settings: SalonSettings;
 }) {
   const t = await getTranslations({ locale, namespace: 'home' });
-  const address = settings.address?.[locale];
+  const contact = await getTranslations({ locale, namespace: 'contact' });
   return (
-    <section className={`${styles.section} ${styles.band}`} aria-labelledby="visit-title">
+    <section className={`${styles.section} ${styles.band}`} aria-labelledby="contact-title">
       <div className={`container ${styles.visit}`}>
         <div className={styles.visitText}>
-          <h2 id="visit-title">{t('visitTitle')}</h2>
-          {address ? <p>{address}</p> : <p className={styles.muted}>{t('visitPending')}</p>}
+          <h2 id="contact-title">{contact('title')}</h2>
+          <p className={styles.muted}>{contact('intro')}</p>
         </div>
         <div className={styles.visitActions}>
           <ButtonLink href="/book" size="lg">
             {t('bookCta')}
           </ButtonLink>
-          <ContactButtons settings={settings} locale={locale} />
+          <ContactButtons settings={settings} locale={locale} showNumbers />
         </div>
       </div>
     </section>

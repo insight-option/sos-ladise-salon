@@ -65,8 +65,6 @@
     "homeServiceStep1": "Choose a service",
     "homeServiceStep2": "Set your area and address",
     "homeServiceStep3": "We confirm after review",
-    "visitTitle": "Visit us",
-    "visitPending": "Our address and opening hours will be announced soon.",
     "bookCta": "Book an appointment"
   },
   "services": {
@@ -156,9 +154,6 @@
     "call": "Call us",
     "whatsapp": "Message us on WhatsApp",
     "phoneLabel": "Phone",
-    "whatsappLabel": "WhatsApp",
-    "addressLabel": "Address",
-    "hoursLabel": "Opening hours",
-    "pending": "To be announced soon."
+    "whatsappLabel": "WhatsApp"
   }
 }

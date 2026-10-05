@@ -65,8 +65,6 @@
     "homeServiceStep1": "اختاري الخدمة",
     "homeServiceStep2": "حدّدي المنطقة والعنوان",
     "homeServiceStep3": "نؤكد الموعد بعد المراجعة",
-    "visitTitle": "زورينا",
-    "visitPending": "سيتم الإعلان عن العنوان وساعات العمل قريبًا.",
     "bookCta": "احجزي موعدك"
   },
   "services": {
@@ -156,9 +154,6 @@
     "call": "اتصلي بنا",
     "whatsapp": "تواصلي عبر واتساب",
     "phoneLabel": "الهاتف",
-    "whatsappLabel": "واتساب",
-    "addressLabel": "العنوان",
-    "hoursLabel": "ساعات العمل",
-    "pending": "سيتم الإعلان عنه قريبًا."
+    "whatsappLabel": "واتساب"
   }
 }

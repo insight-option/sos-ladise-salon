@@ -25,7 +25,7 @@ export async function generateMetadata({
   });
 }
 
-/** Address, hours and map stay hidden behind "to be announced" until approved (spec §4.6). */
+/** Contact shows only the approved call and WhatsApp numbers (owner decision 2026-10-05). */
 export default async function ContactPage({ params }: PageProps<'/[locale]/contact'>) {
   const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) notFound();
@@ -35,7 +35,6 @@ export default async function ContactPage({ params }: PageProps<'/[locale]/conta
   const settings = await getRepository().getSettings();
   const tel = buildTelLink(settings.phone);
   const whatsapp = buildWhatsAppLink(settings.whatsapp);
-  const address = settings.address?.[locale];
 
   return (
     <div className={`container ${styles.page}`}>
@@ -75,20 +74,6 @@ export default async function ContactPage({ params }: PageProps<'/[locale]/conta
             </dd>
           </div>
         )}
-        <div>
-          <dt>
-            <Icon name="pin" size={20} />
-            {t('addressLabel')}
-          </dt>
-          <dd className={address ? undefined : styles.pending}>{address ?? t('pending')}</dd>
-        </div>
-        <div>
-          <dt>
-            <Icon name="clock" size={20} />
-            {t('hoursLabel')}
-          </dt>
-          <dd className={styles.pending}>{t('pending')}</dd>
-        </div>
       </dl>
     </div>
   );
