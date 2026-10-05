@@ -1,0 +1,17 @@
+.switcher {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--tap);
+  min-height: var(--tap);
+  padding-inline: var(--space-3);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-pill);
+  color: var(--color-burgundy);
+  font-size: var(--text-small);
+  font-weight: 600;
+  text-decoration: none;
+}
+.switcher:hover {
+  background: var(--color-blush);
+}

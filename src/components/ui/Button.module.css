@@ -1,0 +1,84 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: var(--tap);
+  padding-inline: var(--space-6);
+  border: 2px solid transparent;
+  border-radius: var(--radius-pill);
+  font-weight: 600;
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color var(--motion-fast) ease,
+    color var(--motion-fast) ease,
+    border-color var(--motion-fast) ease;
+}
+
+.lg {
+  min-height: 52px;
+  padding-inline: var(--space-8);
+  font-size: 1.0625rem;
+}
+
+.block {
+  width: 100%;
+}
+
+.primary {
+  background: var(--color-fuchsia);
+  color: #fff;
+}
+.primary:hover {
+  background: var(--color-fuchsia-hover);
+  color: #fff;
+}
+
+.secondary {
+  background: transparent;
+  border-color: var(--color-burgundy);
+  color: var(--color-burgundy);
+}
+.secondary:hover {
+  background: var(--color-blush);
+  color: var(--color-burgundy-strong);
+}
+
+.solid {
+  background: var(--color-burgundy);
+  color: #fff;
+}
+.solid:hover {
+  background: var(--color-burgundy-strong);
+  color: #fff;
+}
+
+.inverse {
+  background: #fff;
+  color: var(--color-burgundy);
+}
+.inverse:hover {
+  background: var(--color-blush);
+  color: var(--color-burgundy-strong);
+}
+
+.onDark {
+  background: transparent;
+  border-color: #fff;
+  color: #fff;
+}
+.onDark:hover {
+  background: rgb(255 255 255 / 0.15);
+  color: #fff;
+}
+
+.button:disabled,
+.button[aria-disabled='true'] {
+  background: var(--color-line);
+  border-color: var(--color-line);
+  color: var(--color-muted);
+  cursor: not-allowed;
+}

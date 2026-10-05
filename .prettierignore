@@ -1,0 +1,10 @@
+.next
+node_modules
+package-lock.json
+.amplify
+amplify_outputs*
+public
+docs
+*.md
+amplify
+amplify.yml

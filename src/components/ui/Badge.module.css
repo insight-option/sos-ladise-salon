@@ -1,0 +1,32 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 2px var(--space-3);
+  border-radius: var(--radius-pill);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  line-height: 1.6;
+  white-space: nowrap;
+}
+
+.blush {
+  background: var(--color-blush);
+  color: var(--color-burgundy);
+}
+.pending {
+  background: var(--status-pending-bg);
+  color: var(--status-pending-fg);
+}
+.demo {
+  background: var(--status-pending-bg);
+  color: var(--status-pending-fg);
+  border: 1px dashed var(--status-pending-fg);
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+}
