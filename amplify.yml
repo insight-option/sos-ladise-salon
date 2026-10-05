@@ -1,5 +1,6 @@
 version: 1
-# Frontend only: no Amplify backend (no Cognito, Data or Storage) for the Soso showcase site.
+# Static site: `next build` with `output: 'export'` writes plain HTML/CSS/JS to `out/`.
+# No backend (no Cognito, Data or Storage) and no server runtime.
 frontend:
   phases:
     preBuild:
@@ -12,7 +13,7 @@ frontend:
       commands:
         - npm run build
   artifacts:
-    baseDirectory: .next
+    baseDirectory: out
     files:
       - '**/*'
   cache:

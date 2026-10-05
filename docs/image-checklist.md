@@ -8,7 +8,7 @@
 |---|---|---|---|---|---|
 | `media/hero.mp4` | الرئيسية، أعلى الصفحة | 1280×720، ‏12 ث، 1.4MB، دون صوت | — (زخرفي، `aria-hidden`) | — | **توضيحية** |
 | `media/hero-poster.jpg` | صورة بديلة للفيديو | 1280×720 | — (زخرفي) | — | **توضيحية** (إطار من الفيديو) |
-| `images/soso/logo-soso.png` | الترويسة، التذييل، أيقونة الموقع | 1254×1254، خلفية بيضاء | شعار سوسو – صالون نسائي | Soso Ladies Salon logo | **معتمد**. النسخة الشفافة معلّقة (P2) |
+| `images/soso/logo-soso-384.webp` (الأصل: `assets/brand/logo-soso-original.png`) | الترويسة، التذييل، أيقونة الموقع | 384×384 للعرض، والأصل 1254×1254 بخلفية بيضاء | شعار سوسو – صالون نسائي | Soso Ladies Salon logo | **معتمد**. النسخة الشفافة معلّقة (P2) |
 | `images/soso/service-facial.webp` | قسم الوجه والبشرة + خدماته | 1536×1024 | وضع قناع للعناية بالبشرة على وجه عميلة مسترخية | A skincare mask being applied to a relaxed client | **توضيحية** |
 | `images/soso/service-permanent-makeup.webp` | المكياج الدائم | 1536×1024 | خبيرة ترسم شكل الحاجب لعميلة قبل المكياج الدائم | A specialist mapping a client’s brow for permanent makeup | **توضيحية** |
 | `images/soso/service-hair.webp` | خدمات الشعر | 1536×1024 | تصفيف شعر طويل بالمجفف والفرشاة الدائرية | Long hair being blow-dried with a round brush | **توضيحية** |

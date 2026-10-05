@@ -115,3 +115,12 @@
 - عبر AWS Console بربط GitHub، دون مفاتيح AWS على الجهاز، في حساب AWS الخاص بالمشروع (رقم الحساب عند المالك ولا يُكتب في هذا المستودع العام)، والمنطقة `ap-south-1` (Mumbai).
 - تطبيق Amplify **مستقل** لسوسو. تطبيق `oneQ-app` وموارده لا تُمس.
 - إنشاء التطبيق وربطه بالمستودع لم يُؤكَّد بعد (يتم من الـ Console).
+
+## D18. نشر كموقع ثابت (static export)
+- `next.config.ts`: `output: 'export'` و`trailingSlash: true` و`images.unoptimized`. يُنتج `next build` ملفات HTML/CSS/JS عادية في `out/`، **دون أي خادم وقت التشغيل**. هذا يُسقط خطر دعم Next 16 في Amplify SSR (D3)، لأن الاستضافة ملفات ثابتة فقط.
+- `amplify.yml`: `baseDirectory: out`، وهو المسار الموثّق لمواقع Next الثابتة على Amplify.
+- **إن ظهر في بناء Amplify الخطأ** `Can't find required-server-files.json`، فمعناه أن Amplify صنّف التطبيق `WEB_COMPUTE`. الحل من **AWS CloudShell** داخل الـ Console (دون مفاتيح على الجهاز): `aws amplify update-app --app-id <APP_ID> --platform WEB --region ap-south-1` ثم Redeploy.
+- حُذف `src/proxy.ts`، فلا middleware في التصدير الثابت. `public/index.html` يحوّل `/` إلى `/ar/` (meta refresh + JS).
+- **خلل في Next 16 مع التصدير الثابت:** ملفات prefetch تُكتب في مجلدات متداخلة (`__next.$d$locale/services/__PAGE__.txt`) لكن المتصفح يطلبها باسم مسطّح (`__next.$d$locale.services.__PAGE__.txt`)، فيرجع 404 ويفقد التنقل السريع. `scripts/flatten-prefetch.mjs` (بعد `next build`) ينسخ كل ملف للاسم المطلوب. تحققت منه بالمتصفح: صفر طلبات فاشلة، وتنقل دون إعادة تحميل.
+- **الشعار:** نسخة 384px WebP متناسبة (23KB) للعرض، والأصل 1254×1254 دون تعديل في `assets/brand/logo-soso-original.png` (خارج `public` حتى لا يُحمَّل).
+- `npm start` يشغّل `scripts/serve-static.mjs` الذي يخدم `out/` كما تفعل الاستضافة الثابتة (index.html للمجلدات، إعادة توجيه `/ar` إلى `/ar/`، و404.html).

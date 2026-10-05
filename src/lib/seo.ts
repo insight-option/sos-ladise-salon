@@ -10,7 +10,8 @@ export function siteUrl(): URL {
 
 /** Canonical + hreflang alternates for a locale-agnostic path such as `/services`. */
 export function localizedAlternates(locale: Locale, path: string): Metadata['alternates'] {
-  const clean = path === '/' ? '' : path;
+  // Trailing slash matches the exported folder URLs (trailingSlash: true).
+  const clean = path === '/' ? '/' : `${path}/`;
   const languages = Object.fromEntries(LOCALES.map((l) => [l, `/${l}${clean}`]));
   return {
     canonical: `/${locale}${clean}`,

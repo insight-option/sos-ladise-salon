@@ -66,6 +66,15 @@ describe('content', () => {
   });
 });
 
+describe('static entry page', () => {
+  it('sends "/" to the Arabic home page without a server', async () => {
+    const { readFileSync } = await import('node:fs');
+    const html = readFileSync(publicFile('index.html'), 'utf8');
+    expect(html).toContain('content="0; url=/ar/"');
+    expect(html).toContain("location.replace('/ar/'");
+  });
+});
+
 describe('approved contact numbers', () => {
   it('are exactly the owner-approved numbers', () => {
     expect(SITE.phone).toBe('33428070');

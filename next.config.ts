@@ -19,7 +19,13 @@ function resolveSiteUrl(): string {
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
-  // Inlined at build time so server code on Amplify compute sees the same values.
+  // Pure static site (HTML/CSS/JS in `out/`): no server runtime, so hosting needs no
+  // Next.js SSR support. Folders with index.html keep URLs like /ar/services/ working on any CDN.
+  output: 'export',
+  trailingSlash: true,
+  // The image optimizer needs a server; images are pre-sized WebP files instead.
+  images: { unoptimized: true },
+  // Inlined at build time.
   env: {
     NEXT_PUBLIC_SITE_URL: resolveSiteUrl(),
     APP_ENV: process.env.APP_ENV ?? 'preview',

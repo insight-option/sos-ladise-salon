@@ -61,9 +61,10 @@ export const CATEGORY_IMAGES: Record<CategorySlug, ImageRef> = {
   ),
 };
 
+/** Proportional 384px copy of the approved logo (master: assets/brand/logo-soso-original.png, 1254×1254, unaltered). */
 export const LOGO = {
-  src: '/images/soso/logo-soso.png',
-  width: 1254,
-  height: 1254,
+  src: '/images/soso/logo-soso-384.webp',
+  width: 384,
+  height: 384,
   alt: { ar: 'شعار سوسو – صالون نسائي', en: 'Soso Ladies Salon logo' },
 } as const;
