@@ -1,0 +1,17 @@
+.button {
+  justify-content: flex-start;
+}
+
+.label {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 1.3;
+}
+
+.number {
+  font-family: var(--font-en);
+  font-size: var(--text-small);
+  font-weight: 500;
+  unicode-bidi: isolate;
+}

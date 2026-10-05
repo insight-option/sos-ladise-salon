@@ -10,7 +10,8 @@
   --color-burgundy-deep: #5a1831;
   --color-fuchsia: #c2126f;
   --color-fuchsia-hover: #b0105f;
-  --color-gold: #8a6a3a; /* decorative only — never body text */
+  --color-gold: #8a6a3a; /* from the logo; rules, borders, accents (5.0:1 on white) */
+  --color-gold-soft: #d9b77a; /* gold on burgundy surfaces (5.91:1) */
   --color-blush: #f6ecef;
   --color-blush-text: #f3e9ec;
   --color-line: #e8dcd6;

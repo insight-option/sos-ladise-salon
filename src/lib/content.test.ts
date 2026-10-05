@@ -6,7 +6,9 @@ import { demoBusinessHours, demoServices, demoZones } from './data/demo-data';
 import { createEmptyRepository, filterServices } from './data/repository';
 import { computeTotal, getPriceDisplay } from './pricing';
 import { isValidQatarPhone } from './phone';
-import { buildWhatsAppLink } from './whatsapp';
+import { formatNumber } from './format';
+import { formatQar } from './pricing';
+import { buildTelLink, buildWhatsAppLink, formatPhoneDisplay } from './whatsapp';
 import { checkEnv } from '../../scripts/check-env.mjs';
 
 describe('phone validation', () => {
@@ -83,8 +85,10 @@ describe('data rules', () => {
     expect(await repo.getServices()).toEqual([]);
     expect(await repo.getActiveZones()).toEqual([]);
     const settings = await repo.getSettings();
-    expect(settings.phone).toBeUndefined();
-    expect(settings.whatsapp).toBeUndefined();
+    // Only the approved contact numbers are set; everything else waits for approval.
+    expect(settings.phone).toBe('33428070');
+    expect(settings.whatsapp).toBe('74748944');
+    expect(settings.address).toBeUndefined();
     expect(settings.homeTravelMinutes).toBeUndefined();
     expect(settings.pendingRequestsBlockSlots).toBe(false);
   });
@@ -144,5 +148,24 @@ describe('environment check', () => {
         NEXT_PUBLIC_SITE_URL: 'https://soso.qa',
       }),
     ).toEqual([]);
+  });
+});
+
+describe('approved contact numbers', () => {
+  it('builds the exact approved links and display text', () => {
+    expect(buildTelLink('33428070')).toBe('tel:+97433428070');
+    expect(formatPhoneDisplay('33428070')).toBe('+974 3342 8070');
+    expect(buildWhatsAppLink('74748944')).toBe('https://wa.me/97474748944');
+    expect(formatPhoneDisplay('74748944')).toBe('+974 7474 8944');
+    expect(buildTelLink(undefined)).toBeNull();
+  });
+});
+
+describe('digits', () => {
+  it('uses Latin digits in both languages', () => {
+    expect(formatNumber(60, 'ar')).toBe('60');
+    expect(formatNumber(120, 'en')).toBe('120');
+    expect(formatQar(100, 'ar')).toMatch(/100/);
+    expect(formatQar(100, 'ar')).not.toMatch(/[٠-٩]/);
   });
 });

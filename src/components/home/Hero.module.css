@@ -35,7 +35,8 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-6);
-  padding-block: var(--space-18) var(--space-12);
+  /* Bottom space keeps the video pause button clear of the booking buttons. */
+  padding-block: var(--space-18) calc(var(--space-12) + var(--tap));
   max-width: 44rem;
 }
 
@@ -43,14 +44,15 @@
   align-self: flex-start;
   padding: var(--space-1) var(--space-3);
   border-radius: var(--radius-pill);
-  background: rgb(255 255 255 / 0.16);
-  border: 1px solid rgb(255 255 255 / 0.35);
+  background: rgb(42 26 33 / 0.35);
+  border: 1px solid var(--color-gold-soft);
   font-size: var(--text-small);
   font-weight: 600;
 }
 
 .title {
   color: #fff;
+  text-shadow: 0 2px 12px rgb(42 26 33 / 0.45);
   font-size: var(--text-display);
   line-height: 1.25;
   font-weight: 700;

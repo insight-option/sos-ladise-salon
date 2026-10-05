@@ -21,9 +21,11 @@ export interface ContentRepository {
   getBusinessHours(): Promise<BusinessHours[]>;
 }
 
-/** Settings that are confirmed or safe defaults. Contact fields stay empty until approved. */
+/** Confirmed settings (contact numbers approved 2026-10-05) and safe defaults; the rest stays empty until approved. */
 export const BASE_SETTINGS: SalonSettings = {
   name: { ar: 'سوسو – صالون نسائي', en: 'Soso Ladies Salon' },
+  phone: '33428070',
+  whatsapp: '74748944',
   timeZone: 'Asia/Qatar',
   currency: 'QAR',
   pendingRequestsBlockSlots: false,

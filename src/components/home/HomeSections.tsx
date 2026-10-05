@@ -1,9 +1,11 @@
+import Image from 'next/image';
 import { getTranslations } from 'next-intl/server';
-import { Link } from '@/i18n/navigation';
-import { ButtonLink, buttonClass } from '@/components/ui/Button';
+import { ContactButtons } from '@/components/contact/ContactButtons';
+import { ButtonLink } from '@/components/ui/Button';
 import { Icon } from '@/components/ui/Icon';
+import { Link } from '@/i18n/navigation';
+import { SITE_IMAGES } from '@/lib/data/media';
 import type { Category, Locale, SalonSettings } from '@/lib/data/types';
-import { buildWhatsAppLink } from '@/lib/whatsapp';
 import styles from './HomeSections.module.css';
 
 export async function CategoriesSection({
@@ -14,6 +16,7 @@ export async function CategoriesSection({
   categories: readonly Category[];
 }) {
   const t = await getTranslations({ locale, namespace: 'home' });
+  const common = await getTranslations({ locale, namespace: 'common' });
   const other: Locale = locale === 'ar' ? 'en' : 'ar';
   return (
     <section className={`${styles.section} ${styles.band}`} aria-labelledby="categories-title">
@@ -29,17 +32,30 @@ export async function CategoriesSection({
           {categories.map((c) => (
             <li key={c.slug}>
               <Link href={`/services#${c.slug}`} className={styles.categoryCard}>
-                <span className={styles.categoryIcon}>
-                  <Icon name={c.slug} size={28} />
+                <span className={styles.categoryMedia}>
+                  {c.image?.src ? (
+                    <Image
+                      src={c.image.src}
+                      alt={c.image.alt[locale]}
+                      fill
+                      sizes="(min-width: 64rem) 20vw, (min-width: 40rem) 33vw, 50vw"
+                      className={styles.categoryImg}
+                    />
+                  ) : (
+                    <Icon name={c.slug} size={32} />
+                  )}
                 </span>
-                <span className={styles.categoryName}>{c.name[locale]}</span>
-                <span lang={other} className={styles.categoryAlt}>
-                  {c.name[other]}
+                <span className={styles.categoryText}>
+                  <span className={styles.categoryName}>{c.name[locale]}</span>
+                  <span lang={other} className={styles.categoryAlt}>
+                    {c.name[other]}
+                  </span>
                 </span>
               </Link>
             </li>
           ))}
         </ul>
+        <p className={styles.imageNote}>{common('illustrativeNote')}</p>
       </div>
     </section>
   );
@@ -49,14 +65,31 @@ export async function CategoriesSection({
 export async function HomeServiceSection({ locale }: { locale: Locale }) {
   const t = await getTranslations({ locale, namespace: 'home' });
   const hero = await getTranslations({ locale, namespace: 'hero' });
+  const common = await getTranslations({ locale, namespace: 'common' });
+  const image = SITE_IMAGES.homeServiceHero;
   return (
     <section className={styles.section} aria-labelledby="home-service-title">
       <div className="container">
         <div className={styles.homePanel}>
+          <div className={styles.homeMedia}>
+            <Image
+              src={image.src!}
+              alt={image.alt[locale]}
+              fill
+              sizes="(min-width: 64rem) 45vw, 100vw"
+              className={styles.categoryImg}
+            />
+            <span className={styles.mediaTag}>{common('illustrativeImage')}</span>
+          </div>
           <div className={styles.homeText}>
             <span className={styles.homeEyebrow}>{t('homeServiceEyebrow')}</span>
             <h2 id="home-service-title">{t('homeServiceTitle')}</h2>
             <p className={styles.homeBody}>{t('homeServiceBody')}</p>
+            <ol className={styles.homeSteps}>
+              <li>{t('homeServiceStep1')}</li>
+              <li>{t('homeServiceStep2')}</li>
+              <li>{t('homeServiceStep3')}</li>
+            </ol>
             <ButtonLink
               href={{ pathname: '/book', query: { place: 'home' } }}
               variant="inverse"
@@ -65,11 +98,6 @@ export async function HomeServiceSection({ locale }: { locale: Locale }) {
               {hero('bookHome')}
             </ButtonLink>
           </div>
-          <ol className={styles.homeSteps}>
-            <li>{t('homeServiceStep1')}</li>
-            <li>{t('homeServiceStep2')}</li>
-            <li>{t('homeServiceStep3')}</li>
-          </ol>
         </div>
       </div>
     </section>
@@ -84,7 +112,6 @@ export async function VisitSection({
   settings: SalonSettings;
 }) {
   const t = await getTranslations({ locale, namespace: 'home' });
-  const whatsapp = buildWhatsAppLink(settings.whatsapp);
   const address = settings.address?.[locale];
   return (
     <section className={`${styles.section} ${styles.band}`} aria-labelledby="visit-title">
@@ -97,16 +124,7 @@ export async function VisitSection({
           <ButtonLink href="/book" size="lg">
             {t('bookCta')}
           </ButtonLink>
-          {whatsapp && (
-            <a
-              href={whatsapp}
-              className={buttonClass({ variant: 'secondary', size: 'lg' })}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              WhatsApp
-            </a>
-          )}
+          <ContactButtons settings={settings} locale={locale} />
         </div>
       </div>
     </section>

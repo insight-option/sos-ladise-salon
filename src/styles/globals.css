@@ -9,6 +9,7 @@
 html {
   -webkit-text-size-adjust: 100%;
   scroll-behavior: smooth;
+  scroll-padding-top: 104px; /* keeps anchored sections clear of the sticky header */
 }
 
 @media (prefers-reduced-motion: reduce) {

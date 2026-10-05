@@ -1,3 +1,4 @@
+import { CATEGORY_IMAGES } from './media';
 import type { BusinessHours, HomeServiceZone, Service } from './types';
 
 /**
@@ -5,11 +6,6 @@ import type { BusinessHours, HomeServiceZone, Service } from './types';
  * Names, prices, durations, zones and hours below are placeholders, not salon facts.
  * The production build refuses to run with DATA_SOURCE=demo (scripts/check-env.mjs).
  */
-
-const demoImage = (ar: string, en: string) => ({
-  kind: 'missing' as const,
-  alt: { ar, en },
-});
 
 function demoService(
   n: number,
@@ -34,7 +30,8 @@ function demoService(
     consultationEnabled: false,
     published: true,
     isDemo: true,
-    image: demoImage(`صورة ${categoryAr}`, `${categoryEn} image`),
+    // Demo services borrow their section's illustrative image.
+    image: CATEGORY_IMAGES[categorySlug],
     ...overrides,
   };
 }

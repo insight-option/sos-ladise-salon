@@ -1,20 +1,24 @@
 # قائمة الصور والوسائط
 
-الحالة: **حقيقية** (تصوير معتمد للصالون أو أعماله) • **توضيحية** (مرخّصة أو مولّدة، لا تُعرض كأعمال منفذة) • **ناقصة**
+الحالة: **حقيقية** (تصوير معتمد للصالون أو أعماله) • **توضيحية** (مولّدة أو مرخّصة، لا تُعرض كأعمال منفذة) • **ناقصة**
 
-| المعرّف | مكان الاستخدام | الأبعاد المقترحة | alt (ar) | alt (en) | الحالة |
+كل الصور التوضيحية معرّفة في `src/lib/data/media.ts` مع النص البديل باللغتين، وكل صفحة تعرضها تُظهر ملاحظة «الصور توضيحية».
+
+| المعرّف / الملف | مكان الاستخدام | الأبعاد | alt (ar) | alt (en) | الحالة |
 |---|---|---|---|---|---|
-| hero-video | الرئيسية، أعلى الصفحة | 1280×720، ‏12 ث، MP4/H.264 (الحالي 1.4MB) | — (زخرفي، `aria-hidden`) | — | **توضيحية**: `public/media/hero.mp4` |
-| hero-poster | صورة بديلة للفيديو | 1280×720 JPG | — (زخرفي) | — | **توضيحية**: إطار من الفيديو |
-| cat-facial | بطاقة قسم الوجه والبشرة + صور الخدمات | 1200×900 (4:3) | جلسة عناية بالبشرة في صالون سوسو | Skin care session at Soso salon | ناقصة (Q13) |
-| cat-pmu | بطاقة المكياج الدائم | 1200×900 | خدمة المكياج الدائم | Permanent makeup service | ناقصة |
-| cat-hair | بطاقة خدمات الشعر | 1200×900 | تصفيف الشعر في الصالون | Hair styling at the salon | ناقصة |
-| cat-nails | بطاقة خدمات الأظافر | 1200×900 | العناية بالأظافر | Nail care | ناقصة |
-| cat-henna | بطاقة الحناء | 1200×900 | نقش حناء | Henna design | ناقصة |
-| home-service | قسم الخدمة المنزلية | 1600×1000 | خبيرة سوسو تقدّم خدمة في المنزل | A Soso specialist providing a home service | ناقصة |
-| gallery-* | المعرض (لكل قسم، مع `consentConfirmed` لصور العميلات) | 1200×1500 (4:5) | يُكتب لكل صورة | per image | ناقصة (القسم مخفي) |
-| salon-interior | عن الصالون / التواصل | 1600×1000 | صالون سوسو من الداخل | Inside Soso salon | ناقصة |
-| salon-exterior | التواصل | 1600×1000 | واجهة صالون سوسو | Soso salon storefront | ناقصة |
-| team-* | الفريق | 800×1000 | يُكتب لكل موظفة بموافقتها | per person, with consent | ناقصة (القسم مخفي) |
-| og-image | المشاركة الاجتماعية | 1200×630 | سوسو – صالون نسائي | Soso Ladies Salon | ناقصة |
-| logo | الترويسة والأيقونة | SVG أو PNG شفاف | شعار سوسو – صالون نسائي | Soso Ladies Salon logo | 3 مرشّحات في Downloads (Q1) |
+| `media/hero.mp4` | الرئيسية، أعلى الصفحة | 1280×720، ‏12 ث، 1.4MB، دون صوت | — (زخرفي، `aria-hidden`) | — | **توضيحية** |
+| `media/hero-poster.jpg` | صورة بديلة للفيديو | 1280×720 | — (زخرفي) | — | **توضيحية** (إطار من الفيديو) |
+| `images/soso/logo-soso.png` | الترويسة، التذييل، أيقونة الموقع | 1254×1254، خلفية بيضاء | شعار سوسو – صالون نسائي | Soso Ladies Salon logo | **معتمد**. النسخة الشفافة معلّقة (P2) |
+| `images/soso/service-facial.webp` | قسم الوجه والبشرة + خدماته | 1536×1024 | وضع قناع للعناية بالبشرة على وجه عميلة مسترخية | A skincare mask being applied to a relaxed client | **توضيحية** |
+| `images/soso/service-permanent-makeup.webp` | المكياج الدائم | 1536×1024 | خبيرة ترسم شكل الحاجب لعميلة قبل المكياج الدائم | A specialist mapping a client’s brow for permanent makeup | **توضيحية** |
+| `images/soso/service-hair.webp` | خدمات الشعر | 1536×1024 | تصفيف شعر طويل بالمجفف والفرشاة الدائرية | Long hair being blow-dried with a round brush | **توضيحية** |
+| `images/soso/service-nails.webp` | خدمات الأظافر | 1536×1024 | طلاء أظافر بلون وردي هادئ | Nails being painted in a soft pink polish | **توضيحية** |
+| `images/soso/service-henna.webp` | الحناء | 1536×1024 | نقش حناء زهري على ظاهر اليد | A floral henna design on the back of a hand | **توضيحية** |
+| `images/soso/hero-home-service.webp` | قسم الخدمة المنزلية في الرئيسية | 1536×1024 | خبيرة تجميل تقدّم خدمة لعميلة في غرفة جلوس منزلية | A beautician attending to a client in a home living room | **توضيحية** |
+| `images/soso/home-service-manicure.webp` | صفحة الخدمة المنزلية (المرحلة 3) | 1536×1024 | خبيرة تعتني بأظافر عميلة في المنزل | A specialist giving a client a manicure at home | **توضيحية** (لم تُستخدم بعد) |
+| `images/soso/home-service-beauty-kit.webp` | صفحة الخدمة المنزلية (المرحلة 3) | 1536×1024 | حقيبة أدوات تجميل عنابية مفتوحة فيها فُرش ومستحضرات | An open burgundy beauty kit with brushes and products | **توضيحية** (لم تُستخدم بعد) |
+| `images/soso/salon-interior-illustration.webp` | رأس صفحة الخدمات (أجواء) | 1536×1024 | صالون بمقاعد عنابية ومرايا مقوّسة بإطارات ذهبية | A salon with burgundy chairs and arched gold-framed mirrors | **توضيحية**. ممنوع استخدامها كصورة للمقر الحقيقي |
+| gallery-* | المعرض، مع `consentConfirmed` لصور العميلات | 1200×1500 | لكل صورة | per image | **ناقصة** (القسم مخفي) |
+| salon-real-interior / exterior | عن الصالون، التواصل | 1600×1000 | — | — | **ناقصة** (صور حقيقية) |
+| team-* | الفريق، بموافقة كل موظفة | 800×1000 | — | — | **ناقصة** (القسم مخفي) |
+| og-image | المشاركة الاجتماعية | 1200×630 | سوسو – صالون نسائي | Soso Ladies Salon | **ناقصة** (يمكن تصميمها من الشعار والصور التوضيحية) |

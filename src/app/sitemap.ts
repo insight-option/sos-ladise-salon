@@ -3,7 +3,7 @@ import { routing } from '@/i18n/routing';
 import { siteUrl } from '@/lib/seo';
 
 // Only routes with real content are listed; placeholder pages are noindex and omitted.
-const PATHS = ['', '/services'];
+const PATHS = ['', '/services', '/contact'];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = siteUrl();

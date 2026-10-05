@@ -13,12 +13,15 @@ export async function ServiceImage({
   aspect = '4 / 3',
   sizes = '(min-width: 64rem) 33vw, (min-width: 40rem) 50vw, 100vw',
   className,
+  showTag = true,
 }: {
   image?: ImageRef;
   locale: Locale;
   aspect?: string;
   sizes?: string;
   className?: string;
+  /** Hide the per-image tag where the page shows one illustrative-images note instead. */
+  showTag?: boolean;
 }) {
   const t = await getTranslations({ locale, namespace: 'common' });
   const frameClass = [styles.frame, className].filter(Boolean).join(' ');
@@ -36,7 +39,7 @@ export async function ServiceImage({
   return (
     <div className={frameClass} style={{ aspectRatio: aspect }}>
       <Image src={image.src} alt={image.alt[locale]} fill sizes={sizes} className={styles.img} />
-      {image.kind === 'illustrative' && (
+      {showTag && image.kind === 'illustrative' && (
         <span className={styles.tag}>{t('illustrativeImage')}</span>
       )}
     </div>

@@ -293,13 +293,11 @@ textarea.input {
   color: var(--color-burgundy);
 }
 
+/* In normal flow (not sticky) so the step buttons never cover form content. */
 .nav {
-  position: sticky;
-  bottom: 0;
   display: flex;
   gap: var(--space-3);
-  padding-block: var(--space-3);
-  background: linear-gradient(to top, var(--color-ivory) 70%, rgb(251 247 241 / 0));
+  padding-top: var(--space-2);
 }
 .nav > * {
   flex: 1 1 0;

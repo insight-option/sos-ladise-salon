@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import { hasLocale } from 'next-intl';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
@@ -7,6 +8,7 @@ import { ButtonLink } from '@/components/ui/Button';
 import { Icon } from '@/components/ui/Icon';
 import { Link } from '@/i18n/navigation';
 import { routing } from '@/i18n/routing';
+import { SITE_IMAGES } from '@/lib/data/media';
 import { getRepository } from '@/lib/data/repository';
 import type { ServicePlace } from '@/lib/data/types';
 import { pageMetadata } from '@/lib/seo';
@@ -59,7 +61,18 @@ export default async function ServicesPage({
   return (
     <div className={`container ${styles.page}`}>
       <div className={styles.intro}>
-        <h1>{t('title')}</h1>
+        <div className={styles.banner}>
+          <Image
+            src={SITE_IMAGES.salonInterior.src!}
+            alt={SITE_IMAGES.salonInterior.alt[locale]}
+            fill
+            priority
+            sizes="(min-width: 77.5rem) 1240px, 100vw"
+            className={styles.bannerImg}
+          />
+          <h1>{t('title')}</h1>
+        </div>
+        <p className={styles.note}>{common('illustrativeNote')}</p>
         <div className={styles.filters}>
           <nav aria-label={t('placeFilterLabel')}>
             <ul className={styles.segmented}>

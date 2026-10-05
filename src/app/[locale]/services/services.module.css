@@ -10,8 +10,35 @@
   flex-direction: column;
   gap: var(--space-6);
 }
-.intro h1 {
+.banner {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: flex-end;
+  min-height: clamp(11rem, 8rem + 12vw, 17rem);
+  padding: var(--space-6);
+  overflow: hidden;
+  border-radius: var(--radius-panel);
+  background: var(--color-burgundy);
+}
+.banner::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(to top, rgb(42 26 33 / 0.85), rgb(42 26 33 / 0.15) 70%);
+}
+.bannerImg {
+  z-index: -2;
+  object-fit: cover;
+}
+.banner h1 {
+  color: #fff;
   font-size: var(--text-display);
+}
+.note {
+  font-size: var(--text-xs);
+  color: var(--color-muted);
 }
 
 .filters {
@@ -71,7 +98,6 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
-  scroll-margin-top: 88px;
 }
 .category h2 {
   font-size: var(--text-h2);

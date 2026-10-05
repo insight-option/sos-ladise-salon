@@ -9,7 +9,9 @@
     "servicesDescription": "Soso services grouped by section, with a filter for where the service is provided.",
     "bookTitle": "Booking request",
     "bookDescription": "Send a booking request for the salon or a home service; we confirm the time after checking availability.",
-    "comingSoonTitle": "Coming soon"
+    "comingSoonTitle": "Coming soon",
+    "contactTitle": "Contact",
+    "contactDescription": "Call Soso Ladies Salon or message us on WhatsApp."
   },
   "common": {
     "skipToContent": "Skip to content",
@@ -24,7 +26,8 @@
     "next": "Next",
     "edit": "Edit",
     "illustrativeImage": "Illustrative image",
-    "imagePending": "Image pending approval"
+    "imagePending": "Image pending approval",
+    "illustrativeNote": "Images are illustrations of our services, not photos of the salon’s work, team or premises."
   },
   "demo": {
     "banner": "Preview — the data shown is demo data, not the salon's approved information.",
@@ -42,7 +45,8 @@
     "openMenu": "Open menu",
     "closeMenu": "Close menu",
     "switchLanguage": "العربية",
-    "switchLanguageLabel": "Switch to Arabic"
+    "switchLanguageLabel": "Switch to Arabic",
+    "logoLabel": "Soso Ladies Salon, home page"
   },
   "hero": {
     "eyebrow": "At the salon • At home",
@@ -145,5 +149,16 @@
   "footer": {
     "label": "Footer links",
     "rights": "All rights reserved"
+  },
+  "contact": {
+    "title": "Contact us",
+    "intro": "We are happy to answer questions about services and appointments.",
+    "call": "Call us",
+    "whatsapp": "Message us on WhatsApp",
+    "phoneLabel": "Phone",
+    "whatsappLabel": "WhatsApp",
+    "addressLabel": "Address",
+    "hoursLabel": "Opening hours",
+    "pending": "To be announced soon."
   }
 }

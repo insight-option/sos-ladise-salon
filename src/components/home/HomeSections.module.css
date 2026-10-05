@@ -14,8 +14,20 @@
   gap: var(--space-3);
   margin-bottom: var(--space-8);
 }
-.head h2 {
+.head h2,
+.visit h2 {
   font-size: var(--text-h2);
+}
+/* Gold touch from the logo: a short rule under section titles (decorative only). */
+.head h2::after,
+.visit h2::after {
+  content: '';
+  display: block;
+  width: 48px;
+  height: 2px;
+  margin-top: var(--space-2);
+  border-radius: 2px;
+  background: var(--color-gold);
 }
 .moreLink {
   display: inline-flex;
@@ -27,19 +39,38 @@
 
 .categories {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 9rem), 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--space-4);
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
+@media (min-width: 40rem) {
+  .categories {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+@media (min-width: 64rem) {
+  .categories {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+}
+/* On phones the fifth card fills its row instead of sitting alone. */
+@media (max-width: 39.99rem) {
+  .categories > li:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
+  .categories > li:last-child:nth-child(odd) .categoryMedia {
+    aspect-ratio: 16 / 7;
+  }
+}
+
 .categoryCard {
   display: flex;
   flex-direction: column;
-  gap: var(--space-3);
   height: 100%;
-  padding: var(--space-6);
+  overflow: hidden;
   border: 1px solid var(--color-line);
   border-radius: var(--radius-card);
   background: var(--color-ivory);
@@ -50,19 +81,27 @@
     transform var(--motion-base) ease;
 }
 .categoryCard:hover {
-  border-color: var(--color-burgundy);
+  border-color: var(--color-gold);
   color: var(--color-ink);
   transform: translateY(-2px);
 }
-.categoryIcon {
-  display: inline-flex;
+.categoryMedia {
+  position: relative;
+  display: flex;
   align-items: center;
   justify-content: center;
-  width: 56px;
-  height: 56px;
-  border-radius: 16px;
+  aspect-ratio: 4 / 3;
   background: var(--color-blush);
   color: var(--color-burgundy);
+}
+.categoryImg {
+  object-fit: cover;
+}
+.categoryText {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-4);
 }
 .categoryName {
   font-size: var(--text-h3);
@@ -74,16 +113,35 @@
   font-size: var(--text-xs);
   color: var(--color-muted);
 }
+.imageNote {
+  margin-top: var(--space-4);
+  font-size: var(--text-xs);
+  color: var(--color-muted);
+}
 
 .homePanel {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
-  gap: var(--space-8);
-  padding: clamp(1.75rem, 1rem + 3vw, 3rem);
+  overflow: hidden;
   border-radius: var(--radius-panel);
   background: var(--color-burgundy);
   color: #fff;
+  border: 1px solid var(--color-gold);
+}
+.homeMedia {
+  position: relative;
+  flex: 1 1 22rem;
+  min-height: 16rem;
+}
+.mediaTag {
+  position: absolute;
+  inset-block-start: var(--space-3);
+  inset-inline-start: var(--space-3);
+  padding: 2px var(--space-3);
+  border-radius: 8px;
+  background: rgb(255 255 255 / 0.92);
+  color: var(--color-muted);
+  font-size: var(--text-xs);
 }
 .homeText {
   flex: 1 1 22rem;
@@ -92,6 +150,7 @@
   flex-direction: column;
   align-items: flex-start;
   gap: var(--space-4);
+  padding: clamp(1.5rem, 1rem + 2.5vw, 3rem);
 }
 .homeText h2 {
   color: #fff;
@@ -106,11 +165,9 @@
   font-weight: 600;
 }
 .homeSteps {
-  flex: 1 1 20rem;
-  min-width: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 9rem), 1fr));
-  gap: var(--space-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
   margin: 0;
   padding: 0;
   list-style: none;
@@ -118,18 +175,22 @@
 }
 .homeSteps li {
   display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
-  padding: var(--space-4);
-  border-radius: 18px;
-  background: var(--color-burgundy-deep);
+  align-items: center;
+  gap: var(--space-3);
   counter-increment: step;
 }
 .homeSteps li::before {
   content: counter(step);
-  font-size: 1.625rem;
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--color-gold-soft);
+  color: var(--color-gold-soft);
   font-weight: 700;
-  color: var(--color-blush-text);
 }
 
 .visit {
@@ -138,9 +199,6 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--space-6);
-}
-.visit h2 {
-  font-size: var(--text-h2);
 }
 .visitText {
   display: flex;
@@ -157,15 +215,14 @@
   gap: var(--space-3);
 }
 
-:lang(ar) .homeSteps li::before {
-  content: counter(step, arabic-indic);
-}
-
 @media (max-width: 40rem) {
-  .categoryCard {
-    padding: var(--space-4);
+  .categoryText {
+    padding: var(--space-3);
   }
   .categoryName {
-    font-size: 1.0625rem;
+    font-size: 1rem;
+  }
+  .visitActions > * {
+    flex: 1 1 100%;
   }
 }

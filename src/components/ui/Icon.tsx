@@ -13,7 +13,9 @@ type IconName =
   | 'check'
   | 'info'
   | 'home'
-  | 'salon';
+  | 'salon'
+  | 'phone'
+  | 'whatsapp';
 
 const PATHS: Record<IconName, React.ReactNode> = {
   facial: (
@@ -75,6 +77,16 @@ const PATHS: Record<IconName, React.ReactNode> = {
     <>
       <circle cx="12" cy="12" r="9" />
       <path d="M12 8h.01M11 12h1v5h1" />
+    </>
+  ),
+  phone: (
+    <path d="M6.5 3.5h3l1.5 4-2 1.5a11 11 0 0 0 6 6l1.5-2 4 1.5v3a2 2 0 0 1-2 2A16 16 0 0 1 4.5 5.5a2 2 0 0 1 2-2z" />
+  ),
+  // Generic chat bubble (not the WhatsApp trademark); the button label names the app.
+  whatsapp: (
+    <>
+      <path d="M4 20l1.3-3.9A8 8 0 1 1 8 19z" />
+      <path d="M9 10h.01M12 10h.01M15 10h.01" />
     </>
   ),
   home: <path d="M3 11l9-7 9 7M5 9.5V20h14V9.5M10 20v-5h4v5" />,

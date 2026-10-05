@@ -23,7 +23,7 @@ export async function ServiceCard({ service, locale }: { service: Service; local
   const bookPlace = service.availableAtSalon ? 'salon' : 'home';
   return (
     <article className={styles.card}>
-      <ServiceImage image={service.image} locale={locale} />
+      <ServiceImage image={service.image} locale={locale} showTag={false} />
       <div className={styles.body}>
         <PlaceBadges service={service} locale={locale} />
         <h3 className={styles.name}>{service.name[locale]}</h3>

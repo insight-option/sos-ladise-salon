@@ -1,7 +1,9 @@
 'use client';
 
+import Image from 'next/image';
 import { Suspense, useId, useState } from 'react';
 import { useTranslations } from 'next-intl';
+import { LOGO } from '@/lib/data/media';
 import { Link, usePathname } from '@/i18n/navigation';
 import { ButtonLink } from '@/components/ui/Button';
 import { Icon } from '@/components/ui/Icon';
@@ -17,7 +19,6 @@ const NAV = [
 
 export function SiteHeader() {
   const t = useTranslations('nav');
-  const tMeta = useTranslations('meta');
   const pathname = usePathname();
   // The menu is open "for" a pathname, so navigating anywhere closes it without an effect.
   const [openFor, setOpenFor] = useState<string | null>(null);
@@ -42,12 +43,17 @@ export function SiteHeader() {
   return (
     <header className={styles.header}>
       <div className={`container ${styles.bar}`}>
-        <Link href="/" className={styles.brand} aria-label={tMeta('siteName')}>
-          {/* Text wordmark until the final logo is approved (open question Q1). */}
-          <span className={styles.brandName}>{tMeta('brandName')}</span>
-          <span className={styles.brandSub} aria-hidden="true">
-            {tMeta('brandTagline')}
-          </span>
+        <Link href="/" className={styles.brand} aria-label={t('logoLabel')}>
+          {/* Approved logo, unaltered; it has a white background, so the header is white too. */}
+          <Image
+            src={LOGO.src}
+            alt=""
+            width={LOGO.width}
+            height={LOGO.height}
+            sizes="80px"
+            priority
+            className={styles.logo}
+          />
         </Link>
 
         <nav className={styles.nav} aria-label={t('label')}>
